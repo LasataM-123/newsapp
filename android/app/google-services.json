@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "823024776182",
+    "project_id": "lasataflutter",
+    "storage_bucket": "lasataflutter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823024776182:android:d6dc73600fb87ba7600dd7",
+        "android_client_info": {
+          "package_name": "com.herald.newsapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdUdZYjtsNg4RTDaenrL_wrLeqt_HNOao"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
