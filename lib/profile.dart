@@ -1,9 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:newsapp/edit_profile.dart';
 import 'package:newsapp/navbar.dart';
+//import 'package:shared_preferences/shared_preferences.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  String username = "";
+  // void setUsername() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   await prefs.setString('username', 'John Doe');
+  //   loadData();
+  // }
+
+  // void loadData() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     username = prefs.getString('username') ?? 'Wilson Franci';
+  //   });
+  // }
+  var box = Hive.box('myBox');
+  void setUsername() {
+    box.put('username', 'John Doe');
+    loadData();
+  }
+
+  void loadData() {
+    setState(() {
+      username = box.get('username', defaultValue: 'Wilson Franci');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,9 +63,7 @@ class ProfilePage extends StatelessWidget {
                       right: 0,
                       child: IconButton(
                         icon: Icon(Icons.settings, size: 30.0),
-                        onPressed: () {
-                          // Navigate to settings page
-                        },
+                        onPressed: () {},
                       ),
                     ),
                   ],
@@ -106,7 +137,7 @@ class ProfilePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20.0),
                 Text(
-                  "Wilson Franci",
+                  username,
                   style: TextStyle(
                     fontSize: 18.0,
                     fontWeight: FontWeight.bold,
@@ -126,7 +157,7 @@ class ProfilePage extends StatelessWidget {
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
-                          horizontal: 50.0,
+                          horizontal: 40.0,
                           vertical: 10.0,
                         ),
                         backgroundColor: Colors.blue,
@@ -135,9 +166,12 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) => const EditProfilePage(),
-                        ));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EditProfilePage(),
+                          ),
+                        );
                       },
                       child: Text(
                         "Edit Profile",
@@ -157,7 +191,9 @@ class ProfilePage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        setUsername();
+                      },
                       child: Text(
                         "Website",
                         style: TextStyle(color: Colors.white, fontSize: 18.0),
@@ -225,7 +261,12 @@ class ProfilePage extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomNavBar(),
+      bottomNavigationBar: const BottomNavBar(
+        isHomeSelected: false,
+        isExploreSelected: false,
+        isBookmarkSelected: false,
+        isProfileSelected: true,
+      ),
     );
   }
 }

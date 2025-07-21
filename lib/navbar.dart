@@ -1,30 +1,50 @@
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatelessWidget {
-  const BottomNavBar({super.key});
+  final bool isHomeSelected;
+  final bool isExploreSelected;
+  final bool isBookmarkSelected;
+  final bool isProfileSelected;
+
+  const BottomNavBar({
+    super.key,
+    required this.isHomeSelected,
+    required this.isExploreSelected,
+    required this.isBookmarkSelected,
+    required this.isProfileSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          height: 0.8,
-          color: Colors.grey[300], // Thin grey divider at the top
-        ),
+        Container(height: 0.8, color: Colors.grey[300]),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
           color: Colors.transparent,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const [
-              NavItem(icon: Icons.home_outlined, label: 'Home'),
-              NavItem(icon: Icons.explore_outlined, label: 'Explore'),
-              NavItem(icon: Icons.bookmark_border, label: 'Bookmark'),
+            children: [
+              NavItem(
+                icon: Icons.home_outlined,
+                label: 'Home',
+                isSelected: isHomeSelected,
+              ),
+              NavItem(
+                icon: Icons.explore_outlined,
+                label: 'Explore',
+                isSelected: isExploreSelected,
+              ),
+              NavItem(
+                icon: Icons.bookmark_border,
+                label: 'Bookmark',
+                isSelected: isBookmarkSelected,
+              ),
               NavItem(
                 icon: Icons.person_outline,
                 label: 'Profile',
-                isSelected: true,
+                isSelected: isProfileSelected,
               ),
             ],
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:newsapp/newsinfo.dart';
 import 'package:newsapp/signUp.dart';
 import 'package:newsapp/states/bloc/auth_bloc.dart';
@@ -14,6 +15,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final emailCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
+   var box = Hive.box('myBox');
 
   String? _emailErr;
   String? _passErr;
@@ -77,6 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('Welcome ${state.user.email}!')),
                 );
+                box.put("USERID", state.user.uid);
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
@@ -284,6 +287,7 @@ class _SocialBtn extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.onTap,
+    this.color=Colors.black,
   });
 
   @override
