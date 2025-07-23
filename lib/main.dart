@@ -5,6 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:newsapp/bookmark.dart';
 import 'package:newsapp/explore.dart';
+import 'package:newsapp/forgot_password.dart';
+import 'package:newsapp/newsinfo.dart';
+import 'package:newsapp/onboarding.dart';
+import 'package:newsapp/post_method.dart';
 import 'package:newsapp/repo/auth_repo.dart';
 import 'package:newsapp/states/bloc/auth_bloc.dart';
 
@@ -29,7 +33,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         ),
-        home: const ExploreScreen(),
+        home: const ForgotPassword(),
       ),
     );
   }

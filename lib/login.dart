@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:newsapp/forgot_password.dart';
 import 'package:newsapp/newsinfo.dart';
 import 'package:newsapp/signUp.dart';
 import 'package:newsapp/states/bloc/auth_bloc.dart';
@@ -15,7 +16,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final emailCtrl = TextEditingController();
   final passwordCtrl = TextEditingController();
-   var box = Hive.box('myBox');
+  var box = Hive.box('myBox');
 
   String? _emailErr;
   String? _passErr;
@@ -137,9 +138,17 @@ class _LoginPageState extends State<LoginPage> {
                           const Text('Remember me'),
                         ],
                       ),
-                      const Text(
-                        'Forgot password?',
-                        style: TextStyle(color: Colors.blue),
+                      GestureDetector(
+                        onTap: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => ForgotPassword()),
+                          ),
+                        },
+                        child: const Text(
+                          'Forgot password?',
+                          style: TextStyle(color: Colors.blue),
+                        ),
                       ),
                     ],
                   ),
@@ -287,7 +296,7 @@ class _SocialBtn extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.onTap,
-    this.color=Colors.black,
+    this.color = Colors.black,
   });
 
   @override

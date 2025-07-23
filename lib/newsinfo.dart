@@ -1,9 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:newsapp/core/model/news_model.dart';
+import 'package:newsapp/core/network/news_service.dart';
 import 'package:newsapp/search.dart';
 
-class NewsInfo extends StatelessWidget {
+class NewsInfo extends StatefulWidget {
   final String email;
   const NewsInfo({super.key, required this.email});
+
+  @override
+  State<NewsInfo> createState() => _NewsInfoState();
+}
+
+class _NewsInfoState extends State<NewsInfo> {
+  NewsService newsService = NewsService();
+  bool isLoading = false;
+  bool isError = false;
+  TopNewsModel? news;
+  String? errorMessage;
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  void getData() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      final res = await newsService.fetchTopNews();
+      setState(() {
+        isLoading = false;
+      });
+
+      if (res.statusCode == 200) {
+        setState(() {
+          news = TopNewsModel.fromJson(res.data);
+        });
+      } else {
+        setState(() {
+          isError = true;
+          isLoading = false;
+          errorMessage = "Something went wrong";
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isError = true;
+        isLoading = false;
+        errorMessage = "Something went wrong";
+      });
+      throw Exception("Error $e");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +78,7 @@ class NewsInfo extends StatelessWidget {
                   CircleAvatar(
                     radius: 50.0,
                     backgroundImage: NetworkImage(
-                      "https://tse4.mm.bing.net/th/id/OIP.9-2rUx4PF_-oBbG2xcDhSgHaEK?rs=1&pid=ImgDetMain&o=7&rm=3",
+                      "https://tse1.mm.bing.net/th/id/OIP.L09m1RjznRIafPRVOG2kkQHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
                     ),
                   ),
                   Column(
@@ -88,7 +139,7 @@ class NewsInfo extends StatelessWidget {
               ),
               const SizedBox(height: 20.0),
               Text(
-                email,
+                widget.email,
                 style: TextStyle(
                   fontSize: 18.0,
                   fontWeight: FontWeight.bold,
@@ -173,8 +224,20 @@ class NewsInfo extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20.0),
-              RecentNews(),
-              RecentNews(),
+              (isLoading)
+                  ? CircularProgressIndicator()
+                  : (isError)
+                  ? Text(errorMessage ?? "")
+                  : SizedBox(
+                      height: 370,
+                      child: ListView.builder(
+                        itemCount: news?.data?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          Datum? item = news?.data?[index];
+                          return RecentNews(model: item!);
+                        },
+                      ),
+                    ),
             ],
           ),
         ),
@@ -184,7 +247,8 @@ class NewsInfo extends StatelessWidget {
 }
 
 class RecentNews extends StatelessWidget {
-  const RecentNews({super.key});
+  final Datum model;
+  const RecentNews({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +260,7 @@ class RecentNews extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.network(
-              "https://www.eyerevolution.co.uk/wp-content/uploads/2013/02/bbc-new-broadcasting-house-babita1.jpg",
+              model.imageUrl ?? "",
               width: 100.0,
               height: 100.0,
               fit: BoxFit.cover,
@@ -209,7 +273,7 @@ class RecentNews extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Europe",
+                  model.title ?? "",
                   style: TextStyle(
                     fontSize: 14.0,
                     color: const Color.fromARGB(255, 42, 42, 42),
@@ -217,7 +281,7 @@ class RecentNews extends StatelessWidget {
                 ),
                 const SizedBox(height: 6.0),
                 Text(
-                  "Ukraine's President Zelensky to BBC: Blood money being paid...",
+                  model.description ?? "",
                   style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.black,
@@ -231,12 +295,12 @@ class RecentNews extends StatelessWidget {
                         CircleAvatar(
                           radius: 10.0,
                           backgroundImage: NetworkImage(
-                            "https://tse4.mm.bing.net/th/id/OIP.9-2rUx4PF_-oBbG2xcDhSgHaEK?rs=1&pid=ImgDetMain&o=7&rm=3",
+                            "https://tse1.mm.bing.net/th/id/OIP.L09m1RjznRIafPRVOG2kkQHaHa?r=0&rs=1&pid=ImgDetMain&o=7&rm=3",
                           ),
                         ),
                         const SizedBox(width: 5.0),
                         Text(
-                          "BBC News",
+                          model.source ?? "",
                           style: TextStyle(
                             fontSize: 14.0,
                             color: Colors.black,
