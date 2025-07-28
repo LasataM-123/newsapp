@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:newsapp/otp_verification.dart";
 
 class ForgotPassword extends StatelessWidget {
   const ForgotPassword({super.key});
@@ -38,7 +39,7 @@ class ForgotPassword extends StatelessWidget {
             const SizedBox(height: 16.0),
             PasswordRecoveryBox(
               via: "via Email:",
-              value: "lasata@gmail.com",
+              value: "abc@gmail.com",
               icon: Icons.email_outlined,
             ),
             const SizedBox(height: 16.0),
@@ -64,7 +65,12 @@ class ForgotPassword extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => NextPage()),
+                );
+              },
             ),
           ],
         ),
@@ -162,4 +168,77 @@ class _PasswordRecoveryBoxState extends State<PasswordRecoveryBox> {
   }
 }
 
-class NextPage 
+class NextPage extends StatelessWidget {
+  const NextPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Forgot \nPassword?",
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+            const SizedBox(height: 5.0),
+            Text(
+              "Don’t worry! it happens. Please enter the\naddress associated with your account.",
+              style: TextStyle(
+                fontSize: 16,
+                color: const Color.fromARGB(255, 90, 90, 90),
+              ),
+            ),
+            const SizedBox(height: 16.0),
+            Text("Email ID / Mobile Number", style: TextStyle(fontSize: 14)),
+            TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              ),
+            ),
+            const SizedBox(height: 440),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 42),
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+              ),
+              child: const Text(
+                'Submit',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => OtpVerification()),
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

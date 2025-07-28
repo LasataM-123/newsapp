@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:newsapp/bookmark.dart';
+import 'package:newsapp/country.dart';
 import 'package:newsapp/explore.dart';
 import 'package:newsapp/forgot_password.dart';
 import 'package:newsapp/newsinfo.dart';
@@ -11,6 +12,8 @@ import 'package:newsapp/onboarding.dart';
 import 'package:newsapp/post_method.dart';
 import 'package:newsapp/repo/auth_repo.dart';
 import 'package:newsapp/states/bloc/auth_bloc.dart';
+import 'package:newsapp/topics.dart';
+import 'package:newsapp/verification.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +36,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         ),
-        home: const ForgotPassword(),
+        home: const Topics(),
       ),
     );
   }

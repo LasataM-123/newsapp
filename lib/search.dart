@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:newsapp/comments.dart';
+import 'package:newsapp/home.dart';
+import 'package:newsapp/news_search.dart';
+import 'package:newsapp/topic_search.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
@@ -7,35 +10,94 @@ class SearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.all(20.0),
-              width: double.infinity,
-              height: 50.0,
-              decoration: BoxDecoration(
-                border: Border.all(width: 1, color: Colors.black),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(children: [Icon(Icons.search), Text("Search here")]),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Icon(Icons.close, color: Colors.black),
-                    ),
-                  ],
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 50.0,
+                decoration: BoxDecoration(
+                  border: Border.all(width: 1, color: Colors.black),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(children: [Icon(Icons.search), Text("Search here")]),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => Home()),
+                          );
+                        },
+                        child: Icon(Icons.close, color: Colors.black),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            NewsItem(),
-            NewsItem(),
-          ],
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => NewsSearch()),
+                      );
+                    },
+                    child: Text("News", style: TextStyle(fontSize: 18.0)),
+                  ),
+                  const SizedBox(width: 16.0),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => TopicSearch()),
+                      );
+                    },
+                    child: Text("Topic", style: TextStyle(fontSize: 18.0)),
+                  ),
+                  const SizedBox(width: 16.0),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "Author",
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4.0),
+                      Container(height: 2.0, width: 60.0, color: Colors.blue),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20.0),
+              NewsItem(),
+              const SizedBox(height: 16.0),
+              NewsItem(),
+              const SizedBox(height: 16.0),
+
+              NewsItem(),
+              const SizedBox(height: 16.0),
+
+              NewsItem(),
+              const SizedBox(height: 16.0),
+
+              NewsItem(),
+              const SizedBox(height: 16.0),
+              NewsItem(),
+              const SizedBox(height: 16.0),
+            ],
+          ),
         ),
       ),
     );
@@ -49,7 +111,7 @@ class NewsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.all(30.0),
+
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

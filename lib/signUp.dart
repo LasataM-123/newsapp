@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newsapp/country.dart';
 import 'package:newsapp/states/bloc/auth_bloc.dart';
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -52,7 +53,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Account created successfully!')),
                 );
-                Navigator.pop(context);  // back to Login
+                Navigator.push(context, MaterialPageRoute(builder: (_)=>Country()));  
               } else if (state is AuthError) {
                 setState(() => isLoading = false);
                 switch (state.type) {
