@@ -123,7 +123,7 @@ class DetailScreen extends StatelessWidget {
                     BoxShadow(
                       color: Colors.black.withOpacity(0.1),
                       blurRadius: 10,
-                      offset: const Offset(0, -3), // shadow at the top
+                      offset: const Offset(0, -3), 
                     ),
                   ],
                 ),

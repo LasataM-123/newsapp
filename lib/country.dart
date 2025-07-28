@@ -29,7 +29,6 @@ class _CountryState extends State<Country> {
           padding: const EdgeInsets.all(24.0),
           child: Column(
             children: [
-              // Search bar
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
@@ -60,7 +59,6 @@ class _CountryState extends State<Country> {
 
               const SizedBox(height: 12),
 
-              // Country list
               Expanded(
                 child: ListView.builder(
                   itemCount: 6,
@@ -77,7 +75,6 @@ class _CountryState extends State<Country> {
                 ),
               ),
 
-              // Submit Button
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(double.infinity, 42),
@@ -102,7 +99,7 @@ class _CountryState extends State<Country> {
                 },
               ),
 
-              const SizedBox(height: 55), // Extra spacing from bottom
+              const SizedBox(height: 55), 
             ],
           ),
         ),

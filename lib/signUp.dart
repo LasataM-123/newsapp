@@ -33,7 +33,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    // 👉 use the cubit that MyApp provided—DON’T create a new one
     final authCubit = context.read<AuthCubit>();
 
     return Scaffold(
@@ -41,7 +40,6 @@ class _SignUpPageState extends State<SignUpPage> {
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
           child: BlocConsumer<AuthCubit, AuthState>(
-            // 🔑 fire the listener **only** after the button triggers loading
             listenWhen: (previous, current) =>
             (previous is AuthLoading && current is Authenticated) ||
                 (previous is AuthLoading && current is AuthError),
@@ -222,7 +220,6 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 }
 
-/* ---------- Small input widget ---------- */
 
 class _InputField extends StatelessWidget {
   final String label;

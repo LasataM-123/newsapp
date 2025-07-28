@@ -268,7 +268,6 @@ class RecentNews extends StatelessWidget {
           ),
           const SizedBox(width: 12.0),
           Expanded(
-            // Ensures text does not overflow
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

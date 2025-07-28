@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   String? _passErr;
   bool _remember = false;
   bool _isLoading = false;
-  bool _loginAttempted = false; // 👈 NEW: true only after you press the button
+  bool _loginAttempted = false; 
 
   void _clearErrors() {
     setState(() {
@@ -41,14 +41,13 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final authCubit = context
-        .read<AuthCubit>(); // shared cubit (provided in main.dart)
+        .read<AuthCubit>(); 
 
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 20),
           child: BlocConsumer<AuthCubit, AuthState>(
-            // only run listener on *state type* changes
             listenWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
             listener: (context, state) {
               if (state is AuthLoading) {
@@ -73,9 +72,8 @@ class _LoginPageState extends State<LoginPage> {
                 ).showSnackBar(SnackBar(content: Text(state.message)));
               }
 
-              // ✅ Navigate only if this Authenticated result was triggered by our button press
               if (state is Authenticated && _loginAttempted) {
-                _loginAttempted = false; // reset for next time
+                _loginAttempted = false;
                 _clearErrors();
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('Welcome ${state.user.email}!')),
@@ -154,7 +152,6 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(height: 12),
 
-                  /* -------------- LOGIN BUTTON -------------- */
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
@@ -163,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                           : () {
                               setState(() {
                                 _loginAttempted =
-                                    true; // 👈 mark that *we* initiated login
+                                    true;
                               });
                               authCubit.signIn(
                                 emailCtrl.text.trim(),
@@ -245,7 +242,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-/* ---------- helpers ---------- */
 
 class _InputField extends StatelessWidget {
   final String label;

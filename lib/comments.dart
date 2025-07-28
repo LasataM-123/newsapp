@@ -241,7 +241,7 @@ class Comments extends StatelessWidget {
       child: Row(
         children: [
           Transform.translate(
-            offset: Offset(0, -42), // Negative Y moves it upward
+            offset: Offset(0, -42), 
             child: CircleAvatar(radius: 20, backgroundImage: NetworkImage(url)),
           ),
           const SizedBox(width: 10),

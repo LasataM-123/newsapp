@@ -18,12 +18,12 @@ class Home extends StatelessWidget {
             children: [
               const HomeTop(),
               const SizedBox(height: 16),
-              // Wrap from here in scroll view
+        
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      // Search Bar
+                    
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         decoration: BoxDecoration(
@@ -65,7 +65,7 @@ class Home extends StatelessWidget {
                                 color: Color.fromARGB(255, 78, 75, 102),
                               ),
                               onPressed: () {
-                                // Handle filter action
+                              
                               },
                             ),
                           ],
@@ -73,7 +73,7 @@ class Home extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
 
-                      // Topic Row
+                      
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -104,7 +104,7 @@ class Home extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
 
-                      // News Card
+               
                       Container(
                         padding: const EdgeInsets.all(2.0),
                         child: Column(
@@ -187,7 +187,7 @@ class Home extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
 
-                      // Topic Row
+            
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: const [
@@ -315,7 +315,7 @@ class RecentNews extends StatelessWidget {
           ),
           const SizedBox(width: 12.0),
           Expanded(
-            // Ensures text does not overflow
+            
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

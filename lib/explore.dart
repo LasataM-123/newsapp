@@ -9,7 +9,6 @@ class ExploreScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          // ✅ Added scroll view to avoid overflow
           child: Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 30.0,

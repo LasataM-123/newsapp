@@ -97,7 +97,6 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
                         color: Color.fromARGB(255, 78, 75, 102),
                       ),
                       onPressed: () {
-                        // Handle filter action
                       },
                     ),
                   ],

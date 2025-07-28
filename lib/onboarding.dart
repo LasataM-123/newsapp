@@ -106,7 +106,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // Dots on the left
                           Row(
                             children: List.generate(
                               pages.length,
@@ -126,7 +125,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             ),
                           ),
 
-                          // Buttons: Back + Next
                           Row(
                             children: [
                               if (_currentPage != 0)

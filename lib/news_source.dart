@@ -1,8 +1,4 @@
 import "package:flutter/material.dart";
-
-import "package:flutter/material.dart";
-
-import "package:flutter/material.dart";
 import "package:newsapp/fill_profile.dart";
 
 class NewsSource extends StatefulWidget {
@@ -42,7 +38,6 @@ class _NewsSourceState extends State<NewsSource> {
           padding: const EdgeInsets.all(24.0),
           child: Column(
             children: [
-              // Search Bar
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
@@ -73,7 +68,6 @@ class _NewsSourceState extends State<NewsSource> {
 
               const SizedBox(height: 20),
 
-              // Wrap inside Row
               Expanded(
                 child: SingleChildScrollView(
                   child: Wrap(
@@ -103,7 +97,6 @@ class _NewsSourceState extends State<NewsSource> {
                 ),
               ),
 
-              // Submit Button
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   minimumSize: const Size(double.infinity, 42),

@@ -44,7 +44,6 @@ class _TopicsState extends State<Topics> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Search bar
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 decoration: BoxDecoration(
@@ -75,7 +74,6 @@ class _TopicsState extends State<Topics> {
 
               const SizedBox(height: 24),
 
-              // Topic Wrap Layout
               Expanded(
                 child: SingleChildScrollView(
                   child: Wrap(

@@ -14,7 +14,7 @@ class Verification extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(), // empty space at top if needed
+              const SizedBox(),
               Column(
                 children: [
                   Image.asset(
