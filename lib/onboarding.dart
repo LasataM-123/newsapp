@@ -30,7 +30,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     ),
     OnboardingData(
       image:
-          'https://th.bing.com/th/id/OIF.9tfAGTjIxvWpg4Z3pkDXSg?w=287&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3',
+          'https://th.bing.com/th/id/OIP.VVPQIqDqf-OxZPXu07XWKwHaEK?w=322&h=181&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3',
       title: 'Lorem Ipsum is simply\n dummy',
       subtitle:
           'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',

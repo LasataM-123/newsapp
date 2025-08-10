@@ -3,8 +3,8 @@ import 'package:dio/dio.dart';
 class NewsService {
   final Dio _dio = Dio();
   NewsService() {
-    // _dio.options.baseUrl = 'https://api.thenewsapi.com/v1/';
-    _dio.options.baseUrl = 'https://jsonplaceholder.typicode.com/';
+    _dio.options.baseUrl = 'https://api.thenewsapi.com/v1/';
+    // _dio.options.baseUrl = 'https://jsonplaceholder.typicode.com/';
   }
   Future<Response> fetchTopNews() async {
     try {

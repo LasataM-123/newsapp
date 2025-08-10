@@ -1,10 +1,60 @@
 import "package:flutter/material.dart";
+import "package:newsapp/core/model/allnews_model.dart";
+import "package:newsapp/core/network/news_service.dart";
 import "package:newsapp/home.dart";
 import "package:newsapp/search.dart";
 import "package:newsapp/topic_search.dart";
 
-class NewsSearch extends StatelessWidget {
+class NewsSearch extends StatefulWidget {
   const NewsSearch({super.key});
+
+  @override
+  State<NewsSearch> createState() => _NewsSearchState();
+}
+
+class _NewsSearchState extends State<NewsSearch> {
+  NewsService newsService = NewsService();
+  bool isLoading = false;
+  bool isError = false;
+  AllNewsModel? news;
+  String? errorMessage;
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  void getData() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      final res = await newsService.fetchTopNews();
+      setState(() {
+        isLoading = false;
+      });
+
+      if (res.statusCode == 200) {
+        setState(() {
+          news = AllNewsModel.fromJson(res.data);
+        });
+      } else {
+        setState(() {
+          isError = true;
+          isLoading = false;
+          errorMessage = "Something went wrong";
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isError = true;
+        isLoading = false;
+        errorMessage = "Something went wrong";
+      });
+      throw Exception("Error $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,32 +131,20 @@ class NewsSearch extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20.0),
-              RecentNews(
-                imageUrl:
-                    "https://th.bing.com/th/id/OIP.kWytOu-y1xkHeqbYqxQfPwHaE8?w=252&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3",
-                title: "Europe",
-                description:
-                    "Ukraine's President Zelensky to BBC: Blood money being paid...",
-                source: "BBc News",
-              ),
-              const SizedBox(height: 12),
-              RecentNews(
-                imageUrl:
-                    "https://th.bing.com/th/id/OIP.kWytOu-y1xkHeqbYqxQfPwHaE8?w=252&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3",
-                title: "Europe",
-                description:
-                    "Ukraine's President Zelensky to BBC: Blood money being paid...",
-                source: "BBc News",
-              ),
-              const SizedBox(height: 12),
-              RecentNews(
-                imageUrl:
-                    "https://th.bing.com/th/id/OIP.kWytOu-y1xkHeqbYqxQfPwHaE8?w=252&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3",
-                title: "Europe",
-                description:
-                    "Ukraine's President Zelensky to BBC: Blood money being paid...",
-                source: "BBc News",
-              ),
+              (isLoading)
+                  ? CircularProgressIndicator()
+                  : (isError)
+                  ? Text(errorMessage ?? "")
+                  : SizedBox(
+                      height: 370,
+                      child: ListView.builder(
+                        itemCount: news?.data?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          Datum? item = news?.data?[index];
+                          return RecentNews(model: item!);
+                        },
+                      ),
+                    ),
               const SizedBox(height: 12),
             ],
           ),

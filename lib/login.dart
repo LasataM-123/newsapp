@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:newsapp/bottom_nav_host.dart';
 import 'package:newsapp/forgot_password.dart';
 import 'package:newsapp/newsinfo.dart';
 import 'package:newsapp/signUp.dart';
@@ -22,7 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   String? _passErr;
   bool _remember = false;
   bool _isLoading = false;
-  bool _loginAttempted = false; 
+  bool _loginAttempted = false;
 
   void _clearErrors() {
     setState(() {
@@ -40,8 +41,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final authCubit = context
-        .read<AuthCubit>(); 
+    final authCubit = context.read<AuthCubit>();
 
     return Scaffold(
       body: SafeArea(
@@ -81,9 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                 box.put("USERID", state.user.uid);
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) => NewsInfo(email: state.user.email ?? " "),
-                  ),
+                  MaterialPageRoute(builder: (_) => BottomNavHost()),
                 );
               }
             },
@@ -159,8 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                           ? null
                           : () {
                               setState(() {
-                                _loginAttempted =
-                                    true;
+                                _loginAttempted = true;
                               });
                               authCubit.signIn(
                                 emailCtrl.text.trim(),
@@ -241,7 +238,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
 
 class _InputField extends StatelessWidget {
   final String label;

@@ -52,12 +52,7 @@ class NotificationScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomNavBar(
-        isHomeSelected: true,
-        isExploreSelected: false,
-        isBookmarkSelected: false,
-        isProfileSelected: false,
-      ),
+      
     );
   }
 }

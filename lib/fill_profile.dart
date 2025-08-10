@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newsapp/bottom_nav_host.dart';
 import 'package:newsapp/home.dart';
 
 class FillProfile extends StatelessWidget {
@@ -71,7 +72,7 @@ class FillProfile extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => Home()),
+                  MaterialPageRoute(builder: (_) => BottomNavHost()),
                 );
               },
             ),

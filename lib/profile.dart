@@ -261,12 +261,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomNavBar(
-        isHomeSelected: false,
-        isExploreSelected: false,
-        isBookmarkSelected: false,
-        isProfileSelected: true,
-      ),
+
     );
   }
 }
@@ -291,7 +286,7 @@ class RecentNews extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
+          ClipRRect(     
             borderRadius: BorderRadius.circular(8.0),
             child: Image.network(
               imageUrl,

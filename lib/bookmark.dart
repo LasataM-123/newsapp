@@ -122,12 +122,7 @@ class _BookmarkScreenState extends State<BookmarkScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomNavBar(
-        isHomeSelected: false,
-        isExploreSelected: false,
-        isBookmarkSelected: true,
-        isProfileSelected: false,
-      ),
+      
     );
   }
 }

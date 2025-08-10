@@ -4,13 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:newsapp/bookmark.dart';
+import 'package:newsapp/bottom_nav_host.dart';
 import 'package:newsapp/country.dart';
 import 'package:newsapp/explore.dart';
 import 'package:newsapp/forgot_password.dart';
+import 'package:newsapp/home.dart';
 import 'package:newsapp/newsinfo.dart';
 import 'package:newsapp/onboarding.dart';
+import 'package:newsapp/post/fetch_showcase.dart';
 import 'package:newsapp/post_method.dart';
 import 'package:newsapp/repo/auth_repo.dart';
+import 'package:newsapp/signUp.dart';
 import 'package:newsapp/states/bloc/auth_bloc.dart';
 import 'package:newsapp/topics.dart';
 import 'package:newsapp/verification.dart';
@@ -19,7 +23,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Hive.initFlutter();
-  await Hive.openBox('myBox'); // Open a Hive box for user data
+  await Hive.openBox('myBox');
   runApp(const MyApp());
 }
 
@@ -29,14 +33,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-          AuthCubit(AuthRepository()), // Provide AuthCubit here globally
+      create: (_) => AuthCubit(AuthRepository()),
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         ),
-        home: const Topics(),
+        home: const OnboardingScreen(),
       ),
     );
   }

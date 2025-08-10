@@ -1,12 +1,61 @@
 import "package:flutter/material.dart";
 import "package:newsapp/components/home_top.dart";
-import "package:newsapp/navbar.dart";
+import "package:newsapp/core/model/allnews_model.dart";
+import "package:newsapp/core/network/news_service.dart";
 import "package:newsapp/news_search.dart";
 import "package:newsapp/search.dart";
 import "package:newsapp/trending.dart";
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  NewsService newsService = NewsService();
+  bool isLoading = false;
+  bool isError = false;
+  AllNewsModel? news;
+  String? errorMessage;
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+  void getData() async {
+    setState(() {
+      isLoading = true;
+    });
+    try {
+      final res = await newsService.fetchTopNews();
+      setState(() {
+        isLoading = false;
+      });
+
+      if (res.statusCode == 200) {
+        setState(() {
+          news = AllNewsModel.fromJson(res.data);
+        });
+      } else {
+        setState(() {
+          isError = true;
+          isLoading = false;
+          errorMessage = "Something went wrong";
+        });
+      }
+    } catch (e) {
+      setState(() {
+        isError = true;
+        isLoading = false;
+        errorMessage = "Something went wrong";
+      });
+      throw Exception("Error $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +67,11 @@ class Home extends StatelessWidget {
             children: [
               const HomeTop(),
               const SizedBox(height: 16),
-        
+
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                    
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 12),
                         decoration: BoxDecoration(
@@ -64,16 +112,13 @@ class Home extends StatelessWidget {
                                 size: 24,
                                 color: Color.fromARGB(255, 78, 75, 102),
                               ),
-                              onPressed: () {
-                              
-                              },
+                              onPressed: () {},
                             ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 16),
 
-                      
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -104,7 +149,6 @@ class Home extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
 
-               
                       Container(
                         padding: const EdgeInsets.all(2.0),
                         child: Column(
@@ -113,7 +157,7 @@ class Home extends StatelessWidget {
                             ClipRRect(
                               borderRadius: BorderRadius.circular(8.0),
                               child: Image.network(
-                                "https://th.bing.com/th/id/OIP.VW2b3qXqryDRS9ZZY1PZNAHaEo?w=271&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3",
+                                "https://tse1.mm.bing.net/th/id/OIP.F7LcnSUOsOmb5Q6MEmFnMAHaEo?rs=1&pid=ImgDetMain&o=7&rm=3",
                                 width: double.infinity,
                                 height: 180.0,
                                 fit: BoxFit.cover,
@@ -187,7 +231,6 @@ class Home extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
 
-            
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: const [
@@ -238,33 +281,21 @@ class Home extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      RecentNews(
-                        imageUrl:
-                            "https://th.bing.com/th/id/OIP.kWytOu-y1xkHeqbYqxQfPwHaE8?w=252&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3",
-                        title: "Europe",
-                        description:
-                            "Ukraine's President Zelensky to BBC: Blood money being paid...",
-                        source: "BBc News",
-                      ),
-                      const SizedBox(height: 12),
-                      RecentNews(
-                        imageUrl:
-                            "https://th.bing.com/th/id/OIP.kWytOu-y1xkHeqbYqxQfPwHaE8?w=252&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3",
-                        title: "Europe",
-                        description:
-                            "Ukraine's President Zelensky to BBC: Blood money being paid...",
-                        source: "BBc News",
-                      ),
-                      const SizedBox(height: 12),
-                      RecentNews(
-                        imageUrl:
-                            "https://th.bing.com/th/id/OIP.kWytOu-y1xkHeqbYqxQfPwHaE8?w=252&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3",
-                        title: "Europe",
-                        description:
-                            "Ukraine's President Zelensky to BBC: Blood money being paid...",
-                        source: "BBc News",
-                      ),
-                      const SizedBox(height: 12),
+                      (isLoading)
+                          ? CircularProgressIndicator()
+                          : (isError)
+                          ? Text(errorMessage ?? "")
+                          : SizedBox(
+                              height: 150,
+                              child: ListView.builder(
+                                itemCount: news?.data?.length ?? 0,
+                                itemBuilder: (context, index) {
+                                  Datum? item = news?.data?[index];
+                                  return RecentNews(model: item!);
+                                },
+                              ),
+                            ),
+                      const SizedBox(height: 16),
                     ],
                   ),
                 ),
@@ -273,29 +304,14 @@ class Home extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomNavBar(
-        isHomeSelected: true,
-        isExploreSelected: false,
-        isBookmarkSelected: false,
-        isProfileSelected: false,
-      ),
     );
   }
 }
 
 class RecentNews extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final String description;
-  final String source;
+  final Datum model;
 
-  const RecentNews({
-    super.key,
-    required this.imageUrl,
-    required this.title,
-    required this.description,
-    required this.source,
-  });
+  const RecentNews({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -307,7 +323,7 @@ class RecentNews extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.network(
-              imageUrl,
+              model.imageUrl ?? "",
               width: 90.0,
               height: 90.0,
               fit: BoxFit.cover,
@@ -315,12 +331,11 @@ class RecentNews extends StatelessWidget {
           ),
           const SizedBox(width: 12.0),
           Expanded(
-            
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  model.title ?? "",
                   style: TextStyle(
                     fontSize: 14.0,
                     color: const Color.fromARGB(255, 42, 42, 42),
@@ -328,7 +343,7 @@ class RecentNews extends StatelessWidget {
                 ),
                 const SizedBox(height: 6.0),
                 Text(
-                  description,
+                  model.description ?? "",
                   style: TextStyle(fontSize: 16.0, color: Colors.black),
                 ),
                 Row(
@@ -343,7 +358,7 @@ class RecentNews extends StatelessWidget {
                         ),
                         const SizedBox(width: 5.0),
                         Text(
-                          source,
+                          model.source ?? "",
                           style: TextStyle(
                             fontSize: 14.0,
                             color: Colors.black,

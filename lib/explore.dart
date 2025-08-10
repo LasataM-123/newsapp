@@ -162,12 +162,7 @@ class ExploreScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomNavBar(
-        isHomeSelected: false,
-        isExploreSelected: true,
-        isBookmarkSelected: false,
-        isProfileSelected: false,
-      ),
+      
     );
   }
 }
